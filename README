@@ -23,6 +23,10 @@ DESCRIPTION
 
         constants are returned as "undef" in both cases
 
+    called_as_method($level)
+        "called_as_method" returns true if the subroutine at $level was
+        called as a method.
+
 BUGS
         All of these routines are susceptible to the same limitations as
         "caller" as described in "caller" in perlfunc
