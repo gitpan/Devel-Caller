@@ -2,14 +2,34 @@ package Devel::Caller;
 require DynaLoader;
 require Exporter;
 
+use PadWalker ();
+
 require 5.005003;
 
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw( caller_cv called_with );
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 bootstrap Devel::Caller $VERSION;
+
+sub called_with {
+    my $level = shift;
+    my $names = shift || 0;
+
+    my $cx = PadWalker::_upcontext($level + 1);
+    return unless $cx;
+
+    my $cv = caller_cv($level + 2);
+    _called_with($cx, $cv, $names);
+}
+
+sub caller_cv {
+    my $level = shift;
+    my $cx = PadWalker::_upcontext($level + 1);
+    return unless $cx;
+    return _context_cv($cx);
+}
 
 1;
 __END__
@@ -64,6 +84,17 @@ Also, on perl 5.005_03
 
 is broken as it generates real split ops rather than optimising it
 into a constant assignment at compile time as in newer perls.
+
+
+=head1 HISTORY
+
+=over
+
+=item 0.03 Released 2002-04-02
+
+Refactored to share the upcontext code from PadWalker 0.08
+
+=back
 
 =head1 SEE ALSO
 

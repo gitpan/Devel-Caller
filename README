@@ -41,6 +41,10 @@ BUGS
         is broken as it generates real split ops rather than optimising it
         into a constant assignment at compile time as in newer perls.
 
+HISTORY
+        0.03 Released 2002-04-02
+            Refactored to share the upcontext code from PadWalker 0.08
+
 SEE ALSO
         "caller" in perlfunc, PadWalker, Devel::Peek
 

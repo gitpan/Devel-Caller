@@ -4,12 +4,10 @@ use ExtUtils::MakeMaker;
 
 my $module = 'Caller.pm';
 WriteMakefile(
-              'NAME'      => 'Devel::Caller',
-              'VERSION_FROM' => $module, # finds $VERSION
-              'LIBS'      => [''],   # e.g., '-lm'
-              'PREREQ_PM' => { 'Test::More'=> 0 },
-              'DEFINE'    => '',     # e.g., '-DHAVE_SOMETHING'
-              'INC'       => '',     # e.g., '-I/usr/include/other'
+              'NAME'         => 'Devel::Caller',
+              'VERSION_FROM' => $module,
+              'PREREQ_PM'    => { 'Test::More' => 0,
+                                  'PadWalker'  => 0.08 },
              );
 
 
@@ -17,5 +15,10 @@ sub MY::postamble {
     return <<EOF
 README: $module
 \tpod2text $module > README
+
+gcov:
+\trm -f `basename \$(XS_FILES)`.{bb,bbg,da,o}
+\t\$(MAKE) test CCFLAGS="\$(CCFLAGS) -O0 -fprofile-arcs -ftest-coverage"
+\tgcov \$(XS_FILES)
 EOF
 }
