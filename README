@@ -46,6 +46,13 @@ BUGS
         into a constant assignment at compile time as in newer perls.
 
 HISTORY
+        0.06 Released 2002-11-21
+            Fix to called_as_method from Rafael Garcia-Suarez to handle
+            $foo->$method() calls.
+
+        0.06 Released 2002-11-20
+            Added called_as_method routine
+
         0.05 Released 2002-07-25
             Fix a segfault under ithreads. Cleaned up some development cruft
             that leaked out while rushing.
