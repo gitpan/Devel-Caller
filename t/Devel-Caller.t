@@ -126,8 +126,6 @@ sub called_names {
 }
 
 called_names($quux, @quux, %quux);
-
-print "# called_globs\n";
 sub called_globs {
     my @called = called_with(0, 1);
     is( scalar @called, 3, "right count");

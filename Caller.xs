@@ -52,18 +52,23 @@ I32 want_names;
     CV *cv      = SvROK(cv_ref) ? (CV*) SvRV(cv_ref) : 0;
     AV* padn    = cv ? (AV*) AvARRAY(CvPADLIST(cv))[0] : PL_comppad_name;
     AV* padv    = cv ? (AV*) AvARRAY(CvPADLIST(cv))[1] : PL_comppad;
-
+    SV** oldpad;
     OP* op, *prev_op;
     int skip_next = 0;
     char sigil;
 
   PPCODE:
+    /* hacky hacky hacky.  under ithreads Gvs are stored in PL_curpad
+     * which moves about some.  Here we temporarily pretend we were
+     * back in olden times, which is where we're looking */
+    oldpad = PL_curpad;
+    PL_curpad = AvARRAY(padv);
 #define WORK_DAMN_YOU 0
 #if WORK_DAMN_YOU
     printf("cx %x cv %x pad %x %x\n", cx, cv, padn, padv);
 #endif
     /* a lot of this blind derefs, hope it goes ok */
-
+{
     /* (hackily) deparse the subroutine invocation */
 
     op = cx->blk_oldcop->op_next;
@@ -128,6 +133,8 @@ I32 want_names;
         }
 
     }
+    PL_curpad = oldpad; /* see hacky hacky hacky note above */
+}
 
 
 SV*
