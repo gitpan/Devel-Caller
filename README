@@ -16,7 +16,10 @@ DESCRIPTION
         "caller_cv" gives you the coderef of the subroutine being invoked at
         the call frame indicated by the value of $level
 
-    called_with($level, $names)
+    caller_args($level)
+        Returns the arguments passed into the caller at level $level
+
+    caller_vars( $level, $names ) =item called_with($level, $names)
         "called_with" returns a list of references to the original arguments
         to the subroutine at $level. if $names is true, the names of the
         variables will be returned instead
@@ -46,6 +49,11 @@ BUGS
         into a constant assignment at compile time as in newer perls.
 
 HISTORY
+        0.08 Released 2003-03-28
+            Added caller_vars as a synonym for called_with
+
+            Added caller_args
+
         0.06 Released 2002-11-21
             Fix to called_as_method from Rafael Garcia-Suarez to handle
             $foo->$method() calls.
@@ -71,7 +79,7 @@ AUTHOR
         PadWalker by Robin Houston
 
 COPYRIGHT
-        Copyright (c) 2002, Richard Clamp. All Rights Reserved. This module
-        is free software. It may be used, redistributed and/or modified
-        under the same terms as Perl itself.
+        Copyright (c) 2002, 2003, Richard Clamp. All Rights Reserved. This
+        module is free software. It may be used, redistributed and/or
+        modified under the same terms as Perl itself.
 
