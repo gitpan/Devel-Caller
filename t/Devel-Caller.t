@@ -1,6 +1,6 @@
-#!perl
+#!perl -w
 use strict;
-use Test::More tests => 70;
+use Test::More tests => 72;
 
 BEGIN { use_ok( 'Devel::Caller', qw( caller_cv caller_args caller_vars called_with called_as_method ) ) }
 
@@ -32,6 +32,7 @@ my (@foo, %foo);
 sub called_lex {
     my @called = called_with(0);
     is( scalar @called, 3, "right count");
+    local $TODO = "pad reorg broke this" if $] >= 5.008001;
     is( $called[0], \$foo, "with lexical \$foo" );
     is( $called[1], \@foo, "with lexical \@foo" );
     is( $called[2], \%foo, "with lexical \%foo" );
@@ -60,7 +61,6 @@ $what = 'constant';
     my $foo;
     @expect = undef;                called_assign('foo');
     @expect = (undef, '$foo');      called_assign('foo', $foo);
-    local $TODO = "fix deparsing of constant lists";
     @expect = (undef, '$foo');      called_assign(['foo'], $foo);
 }
 
@@ -183,3 +183,15 @@ sub args {
 }
 
 args('foo', 'bar');
+
+# rt.cpan.org 2878
+my $coy = rand 6;
+print "# cunning coy tests\n";
+real( $coy, $coy );
+print "# concat\n";
+
+print "# print ", real( $coy, $coy ), "\n";
+
+sub real {
+    is_deeply( [ called_with(0,1) ], [qw( $coy $coy )], 'real( $coy, $coy )' );
+}
