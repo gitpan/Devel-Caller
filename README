@@ -42,6 +42,9 @@ BUGS
         into a constant assignment at compile time as in newer perls.
 
 HISTORY
+        0.04 Released 2002-07-01
+            Decode glob params too.
+
         0.03 Released 2002-04-02
             Refactored to share the upcontext code from PadWalker 0.08
 

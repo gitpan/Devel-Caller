@@ -1,6 +1,6 @@
 #!perl
 use strict;
-use Test::More tests => 62;
+use Test::More tests => 66;
 
 BEGIN { use_ok( 'Devel::Caller', qw( caller_cv called_with ) ) }
 
@@ -127,6 +127,16 @@ sub called_names {
 
 called_names($quux, @quux, %quux);
 
+print "# called_globs\n";
+sub called_globs {
+    my @called = called_with(0, 1);
+    is( scalar @called, 3, "right count");
+    is( $called[0], '*main::STDIN',  "with name 0" );
+    is( $called[1], '*main::STDOUT', "with name 1" );
+    is( $called[2], '*main::STDERR', "with name 2" );
+}
+
+called_globs(*STDIN, *STDOUT, *STDERR);
 
 package T;
 $what = 'package';

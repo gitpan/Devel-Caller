@@ -34,6 +34,7 @@ glob_out(char sigil, GVOP* op, I32 want_name)
     case '$': ret = (SV*) GvSV(gv); break;
     case '@': ret = (SV*) GvAV(gv); break;
     case '%': ret = (SV*) GvHV(gv); break;
+    case '*': ret = (SV*) GvEGV(gv); break;
     }
     return sv_2mortal(newRV_inc(ret));
 }
@@ -48,7 +49,7 @@ SV *cv_ref;
 I32 want_names;
   PREINIT:
     PERL_CONTEXT* cx = (PERL_CONTEXT*) SvIV(context);
-    CV *cv      = (CV*) SvRV(cv_ref);
+    CV *cv      = SvROK(cv_ref) ? (CV*) SvRV(cv_ref) : 0;
     AV* padn    = cv ? (AV*) AvARRAY(CvPADLIST(cv))[0] : PL_comppad_name;
     AV* padv    = cv ? (AV*) AvARRAY(CvPADLIST(cv))[1] : PL_comppad;
 
@@ -108,6 +109,7 @@ I32 want_names;
         case OP_GVSV:
         case OP_RV2AV:
         case OP_RV2HV:
+        case OP_RV2GV:
             VARIABLE_PREAMBLE;
 
             if      (op->op_type == OP_GVSV) 
@@ -116,6 +118,8 @@ I32 want_names;
                 XPUSHs(glob_out('@', (GVOP*) prev_op, want_names));
             else if (op->op_type == OP_RV2HV) 
                 XPUSHs(glob_out('%', (GVOP*) prev_op, want_names));
+            else if (op->op_type == OP_RV2GV) 
+                XPUSHs(glob_out('*', (GVOP*) prev_op, want_names));
             break;
         case OP_CONST:
             VARIABLE_PREAMBLE;

@@ -9,7 +9,7 @@ require 5.005003;
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw( caller_cv called_with );
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 bootstrap Devel::Caller $VERSION;
 
@@ -19,6 +19,8 @@ sub called_with {
 
     my $cx = PadWalker::_upcontext($level + 1);
     return unless $cx;
+
+    print "context $cx\n";
 
     my $cv = caller_cv($level + 2);
     _called_with($cx, $cv, $names);
@@ -89,6 +91,10 @@ into a constant assignment at compile time as in newer perls.
 =head1 HISTORY
 
 =over
+
+=item 0.04 Released 2002-07-01
+
+Decode glob params too.
 
 =item 0.03 Released 2002-04-02
 
