@@ -1,0 +1,21 @@
+---
+name: Devel-Caller
+version: 0.10
+author:
+  - |-
+    Richard Clamp <richardc@unixbeard.net> with close reference to
+    PadWalker by Robin Houston
+abstract: meatier versions of C<caller>
+license: perl
+requires:
+  PadWalker: 0.08
+build_requires:
+  Test::More: 0
+provides:
+  DB:
+    file: lib/Devel/Caller.pm
+    version: 0.10
+  Devel::Caller:
+    file: lib/Devel/Caller.pm
+    version: 0.10
+generated_by: Module::Build version 0.25

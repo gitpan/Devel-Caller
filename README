@@ -1,4 +1,4 @@
-README for Devel::Caller 0.09
+README for Devel::Caller 0.10
 
 =head1 NAME
 
@@ -36,6 +36,15 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.10 Wednesday 5th July, 2006
+
+	Use strlen rather than playing with SvLEN/SvCUR to determine
+	the length of identifiers in the pad.  It's a theoretical
+	segfault waiting to happen, but one that isn't tickled by the
+	current test suite.  Fixes failures under perl 5.8.8 as
+	reported by clkao.
+
+
 =item 0.09 Sunday 5th October, 2003
 
 	Split Changes out from HISTORY pod section.
@@ -48,12 +57,6 @@ What changed over the last 3 revisions
 
 	Added caller_vars as a synonym for called_with
 	Added caller_args
-
-
-=item 0.07 2002-11-21
-
-	Fix to called_as_method from Rafael Garcia-Suarez to handle
-	$foo->$method() calls.
 
 =back
 
@@ -68,7 +71,7 @@ PadWalker by Robin Houston
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002, 2003, Richard Clamp. All Rights Reserved.  This
-module is free software. It may be used, redistributed and/or modified
-under the same terms as Perl itself.
+Copyright (c) 2002, 2003, 2006 Richard Clamp. All Rights Reserved.
+This module is free software. It may be used, redistributed and/or
+modified under the same terms as Perl itself.
 

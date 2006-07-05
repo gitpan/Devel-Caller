@@ -152,13 +152,12 @@ I32 want_names;
             VARIABLE_PREAMBLE;
 
             if (want_names) {
-                /* XXX this catches a bizarreness in the pad which
-                   causes SvCUR to be incorrect for: 
-		   my (@foo, @bar); bar (@foo = @bar) */
                 SV* sv = *av_fetch(padn, op->op_targ, 0);
-                I32 len = SvCUR(sv) > SvLEN(sv) ? SvLEN(sv) - 1 : SvCUR(sv);
+                /* XXX ignore SvLEN, as it's just freaky and wrong for
+		   things in the pad */
+                I32 len = strlen( SvPVX(sv) );
 #if WORK_DAMN_YOU
-                printf("sv %x cur %d len %d\n", sv, SvCUR(sv), SvLEN(sv));
+                printf("sv %x SvCUR %d SvLEN %d len %d\n", sv, SvCUR(sv), SvLEN(sv), len);
 #endif
                 XPUSHs(sv_2mortal(newSVpvn(SvPVX(sv), len)));
             }

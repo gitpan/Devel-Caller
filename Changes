@@ -1,3 +1,10 @@
+0.10 Wednesday 5th July, 2006
+	Use strlen rather than playing with SvLEN/SvCUR to determine
+	the length of identifiers in the pad.  It's a theoretical
+	segfault waiting to happen, but one that isn't tickled by the
+	current test suite.  Fixes failures under perl 5.8.8 as
+	reported by clkao.
+
 0.09 Sunday 5th October, 2003
 	Split Changes out from HISTORY pod section.
 	Port to Module::Build

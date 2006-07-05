@@ -9,7 +9,7 @@ require 5.005003;
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw( caller_cv caller_args caller_vars called_with called_as_method );
 
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 bootstrap Devel::Caller $VERSION;
 
@@ -133,8 +133,8 @@ PadWalker by Robin Houston
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002, 2003, Richard Clamp. All Rights Reserved.  This
-module is free software. It may be used, redistributed and/or modified
-under the same terms as Perl itself.
+Copyright (c) 2002, 2003, 2006 Richard Clamp. All Rights Reserved.
+This module is free software. It may be used, redistributed and/or
+modified under the same terms as Perl itself.
 
 =cut
