@@ -1,6 +1,6 @@
 ---
 name: Devel-Caller
-version: 0.10
+version: 0.11
 author:
   - |-
     Richard Clamp <richardc@unixbeard.net> with close reference to
@@ -14,8 +14,8 @@ build_requires:
 provides:
   DB:
     file: lib/Devel/Caller.pm
-    version: 0.10
+    version: 0.11
   Devel::Caller:
     file: lib/Devel/Caller.pm
-    version: 0.10
+    version: 0.11
 generated_by: Module::Build version 0.25

@@ -105,7 +105,9 @@ $what = 'lexical prexist';
     @expect = qw( %flange );        called_assign(%flange = (%foo, %bar));
 }
 
-
+use Config;
+local $TODO = "ithreads support for globs in 5.008 is bugged to heck"
+  if $] > 5.008 && $Config{useithreads};
 use vars qw( $quux @quux %quux );
 sub called {
     my @called = caller_vars(0);
@@ -164,6 +166,8 @@ $what = 'package';
     @expect = qw( %T::quux %T::bar );  called_assign(%quux = %foo, %bar);
     @expect = qw( %T::flange );        called_assign(%flange = (%foo, %bar));
 }
+
+local $::TODO = undef; # ithreads
 
 package main;
 # were we called as a method or a sub

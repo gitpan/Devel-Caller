@@ -19,6 +19,7 @@
 #define OP_NAME(o)   PL_op_name[o->op_type]
 #endif
 
+#define WORK_DAMN_YOU 0
 
 SV*
 glob_out(char sigil, GVOP* op, I32 want_name)
@@ -26,6 +27,18 @@ glob_out(char sigil, GVOP* op, I32 want_name)
     GV* gv = OPGV(op);
     SV* ret;
 
+#if WORK_DAMN_YOU
+    printf("%c op:%x defgv:%x gv:%x want_name:%d padix:%d\n",
+	   sigil, op, PL_defgv, gv, want_name, cPADOPx(op)->op_padix );
+#endif
+
+#if defined(USE_ITHREADS) && (PERL_VERSION == 8)
+    /* for 5.8 gv will be garbage causing a segfault. bah */
+    if (want_name) {
+	return sv_2mortal(newSVpvf(""));
+    }
+    return sv_2mortal(newSVsv(&PL_sv_undef));
+#else
     if (want_name) {
         return sv_2mortal(newSVpvf("%c%s::%s", sigil,
                                    HvNAME(GvSTASH(gv)), 
@@ -39,9 +52,9 @@ glob_out(char sigil, GVOP* op, I32 want_name)
     case '*': ret = (SV*) GvEGV(gv); break;
     }
     return sv_2mortal(newRV_inc(ret));
+#endif
 }
 
-#define WORK_DAMN_YOU 0
 
 /* scan forward to the ENTERSUB and figure out which PUSHMARK is the
  * one that precedes the arguments for that sub */
@@ -59,7 +72,6 @@ scan_forward(OP *op) {
 #if WORK_DAMN_YOU
         printf("SCAN op %x %s next %x sibling %x targ %d\n", 
 	       op, OP_NAME(op), op->op_next, op->op_sibling, op->op_targ);  
-
 #endif
 	switch (op->op_type) {
 	case OP_PUSHMARK: 
@@ -101,7 +113,7 @@ I32 want_names;
     SV** oldpad;
     OP* op, *prev_op;
     int skip_next = 0;
-    char sigil;
+    GV* gv;
 
   PPCODE:
 {
@@ -145,7 +157,7 @@ I32 want_names;
                 /* and ignore this value */ \
                 break; \
             } \
-            if (skip_next) break; 
+            if (skip_next) break;
 #if WORK_DAMN_YOU
 	    printf("PAD skip_next %d\n", skip_next);
 #endif

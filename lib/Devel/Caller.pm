@@ -9,7 +9,7 @@ require 5.005003;
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw( caller_cv caller_args caller_vars called_with called_as_method );
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 bootstrap Devel::Caller $VERSION;
 
@@ -93,11 +93,18 @@ called as a method.
 
 =head1 BUGS
 
+
 All of these routines are susceptible to the same limitations as
 C<caller> as described in L<perlfunc/caller>
 
 The deparsing of the optree perfomed by called_with is fairly simple-minded
-and so a bit flaky.  It's know to currently be inaccurate in this case:
+and so a bit flaky.
+
+=over
+
+=item
+
+The code is currently inaccurate in this case:
 
  print foo( $bar ), baz( $quux );
 
@@ -112,8 +119,9 @@ A workaround is to rewrite the code like so:
 
 A more correct fix is left as a TODO item.
 
+=item
 
-Also, on perl 5.005_03
+Under perl 5.005_03
 
  use vars qw/@bar/;
  foo( @bar = qw( some value ) );
@@ -121,6 +129,19 @@ Also, on perl 5.005_03
 will not deparse correctly as it generates real split ops rather than
 optimising it into a constant assignment at compile time as in later
 releases of perl.
+
+=item
+
+On perl 5.8.x compiled with ithreads it's not currently supported to
+retrieve package variables from the past.  Instead the empty string is
+returned for the name, and undef is returned when the value is
+requested.
+
+Though crappy, this is an improvement on causing your application to
+segfault.
+
+=back
+
 
 =head1 SEE ALSO
 

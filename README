@@ -1,4 +1,4 @@
-README for Devel::Caller 0.10
+README for Devel::Caller 0.11
 
 =head1 NAME
 
@@ -36,6 +36,12 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.11 Sunday 9th July, 2006
+
+	Fudge around the segfaults in 5.8.x ithreaded builds by
+	not looking up what the package variable is.
+
+
 =item 0.10 Wednesday 5th July, 2006
 
 	Use strlen rather than playing with SvLEN/SvCUR to determine
@@ -51,12 +57,6 @@ What changed over the last 3 revisions
 	Port to Module::Build
 	We can now determine constant values in called_with.
 	Partial fixes for http://rt.cpan.org/NoAuth/Bug.html?id=2878
-
-
-=item 0.08 2003-03-28
-
-	Added caller_vars as a synonym for called_with
-	Added caller_args
 
 =back
 
