@@ -1,21 +1,14 @@
----
-name: Devel-Caller
-version: 0.11
-author:
-  - |-
-    Richard Clamp <richardc@unixbeard.net> with close reference to
-    PadWalker by Robin Houston
-abstract: meatier versions of C<caller>
-license: perl
-requires:
-  PadWalker: 0.08
-build_requires:
-  Test::More: 0
-provides:
-  DB:
-    file: lib/Devel/Caller.pm
-    version: 0.11
-  Devel::Caller:
-    file: lib/Devel/Caller.pm
-    version: 0.11
-generated_by: Module::Build version 0.25
+--- #YAML:1.0
+name:                Devel-Caller
+version:             2.01
+abstract:            ~
+license:             ~
+author:              ~
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    PadWalker:                     0.08
+    Test::More:                    0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

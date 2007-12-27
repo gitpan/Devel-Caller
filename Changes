@@ -1,3 +1,11 @@
+2.01 Thursday 27th December, 2007
+	Translated the XS and C into perl using B.  Though the perl looks
+	much like C this gives a chance to make it more perlish in the future.
+  	There's a tiny bit of XS left to expose some internals to perl space.
+	
+	Dropped compatibilty for older perls (PadWalker doesn't work 
+	there anyway)
+
 0.11 Sunday 9th July, 2006
 	Fudge around the segfaults in 5.8.x ithreaded builds by
 	not looking up what the package variable is.
