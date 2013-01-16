@@ -1,20 +1,23 @@
---- #YAML:1.0
-name:               Devel-Caller
-version:            2.05
-abstract:           ~
-author:  []
-license:            unknown
-distribution_type:  module
+---
+abstract: 'meatier versions of C<caller>'
+author:
+  - 'Richard Clamp <richardc@unixbeard.net>'
+build_requires:
+  ExtUtils::MakeMaker: 0
 configure_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    PadWalker:   0.08
-    Test::More:  0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.48
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.120921'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Devel-Caller
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  PadWalker: 0.08
+  Test::More: 0
+version: 2.06
